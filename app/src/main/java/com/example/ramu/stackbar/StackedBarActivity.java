@@ -43,15 +43,6 @@ public class StackedBarActivity extends DemoBase implements SeekBar.OnSeekBarCha
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_barchart);
 
-        tvX = (TextView) findViewById(R.id.tvXMax);
-        tvY = (TextView) findViewById(R.id.tvYMax);
-
-        mSeekBarX = (SeekBar) findViewById(R.id.seekBar1);
-        mSeekBarX.setOnSeekBarChangeListener(this);
-
-        mSeekBarY = (SeekBar) findViewById(R.id.seekBar2);
-        mSeekBarY.setOnSeekBarChangeListener(this);
-
         mChart = (BarChart) findViewById(R.id.chart1);
         mChart.setOnChartValueSelectedListener(this);
 
@@ -70,6 +61,8 @@ public class StackedBarActivity extends DemoBase implements SeekBar.OnSeekBarCha
         mChart.setDrawValueAboveBar(false);
         mChart.setHighlightFullBarEnabled(false);
 
+       // mChart.getXAxis().setCenterAxisLabels(true);
+
         // change the position of the y-labels
         YAxis leftAxis = mChart.getAxisLeft();
         leftAxis.setValueFormatter(new MyAxisValueFormatter());
@@ -83,136 +76,134 @@ public class StackedBarActivity extends DemoBase implements SeekBar.OnSeekBarCha
         // mChart.setDrawYLabels(false);
 
         // setting data
-        mSeekBarX.setProgress(12);
-        mSeekBarY.setProgress(100);
 
         Legend l = mChart.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+     //   l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+       // l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         l.setDrawInside(false);
         l.setFormSize(8f);
-        l.setFormToTextSpace(4f);
-        l.setXEntrySpace(6f);
+       // l.setFormToTextSpace(4f);
+       // l.setXEntrySpace(6f);
+
+
+
 
         // mChart.setDrawLegend(false);
-    }
+        String data ="[\n" +
+                "  {\n" +
+                "  \"SubmitDate\":\"7/5/2017\",\n" +
+                "  \"Sheets\":[\n" +
+                "    {\n" +
+                "    \"Data3Name\":\"12\",\n" +
+                "    \"Colorcode\":\"#F4511E\",\n" +
+                "    \"Name\":\"p1\"\n" +
+                "    },\n" +
+                "  {\n" +
+                "    \"Data3Name\":\"18\",\n" +
+                "    \"Colorcode\":\"#FF5722\",\n" +
+                "    \"Name\":\"p2\"\n" +
+
+                "    },\n" +
+                "    {\n" +
+                "    \"Data3Name\":\"29\",\n" +
+                "    \"Colorcode\":\"#FF7043\",\n" +
+                "    \"Name\":\"p3\"\n" +
+
+                "    },\n" +
+                "    {\n" +
+                "    \"Data3Name\":\"42\",\n" +
+                "    \"Colorcode\":\"#FF8A65\",\n" +
+                "    \"Name\":\"p4\"\n" +
+
+                "    }\n" +
+                "  ]\n" +
+                "  },\n" +
+                "  {\n" +
+                "  \"SubmitDate\":\"8/5/2017\",\n" +
+                "  \"Sheets\":[\n" +
+                "    {\n" +
+                "    \"Data3Name\":\"34\",\n" +
+                "    \"Colorcode\":\"#43A047\",\n" +
+                "    \"Name\":\"m1\"\n" +
+
+                "    },\n" +
+                "  {\n" +
+                "    \"Data3Name\":\"23\",\n" +
+                "    \"Colorcode\":\"#4CAF50\",\n" +
+                "    \"Name\":\"m5\"\n" +
+
+                "    },\n" +
+                "    {\n" +
+                "    \"Data3Name\":\"10\",\n" +
+                "    \"Colorcode\":\"#66BB6A\",\n" +
+                "    \"Name\":\"m6\"\n" +
+
+                "    }\n" +
+                "  ]\n" +
+                "  },\n" +
+                "  {\n" +
+                "  \"SubmitDate\":\"9/5/2017\",\n" +
+                "  \"Sheets\":[\n" +
+                "    {\n" +
+                "    \"Data3Name\":\"25\",\n" +
+                "    \"Colorcode\":\"#1E88E5\",\n" +
+                "    \"Name\":\"k1\"\n" +
 
 
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                "    },\n" +
+                "  {\n" +
+                "    \"Data3Name\":\"40\",\n" +
+                "    \"Colorcode\":\"#2196F3\",\n" +
+                "    \"Name\":\"k2\"\n" +
 
-        tvX.setText("" + (mSeekBarX.getProgress() + 1));
-        tvY.setText("" + (mSeekBarY.getProgress()));
-
-        ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
-
-
-       /*
-       float[] val1 = {12f,18f};
-        float[] val2 = {18f,21f,27f};
-        float[] val3 = {19f,26f,32f,36f};
-        yVals1.add(new BarEntry(0,val1));
-        yVals1.add(new BarEntry(1,val2));
-        yVals1.add(new BarEntry(2,val3));
-*/
-        float values[]=null;
-
-        BarDataSet set1 = null;
-
-        String data =" [\n" +
-                "        {\n" +
-                "            \"SubmitDate\": \"7/5/2017 12:00:00 AM\",\n" +
-                "            \"Sheets\": [\n" +
-                "                    {\n" +
-                "                          \"Data3Name\": \"10\"\n" +
-                "                          },\n" +
-                "                  {\n" +
-                "                        \"Data3Name\": \"20\"\n" +
-                "                   },\n" +
-
-
-                "                  {\n" +
-                "                        \"Data3Name\": \"40\"\n" +
-                "                   }\n" +
-
-
-                "              ]\n" +
-                "        }\n" +
-                "        ,\n" +
-                "        {\n" +
-                "            \"SubmitDate\": \"7/5/2018 12:00:00 AM\",\n" +
-                "            \"Sheets\": [\n" +
-                "                    {\n" +
-                "                          \"Data3Name\": \"15\"\n" +
-                "                          },\n" +
-                "                  {\n" +
-                "                        \"Data3Name\": \"30\"\n" +
-                "                   },\n" +
-                "                                     {\n" +
-                "                        \"Data3Name\": \"45\"\n" +
-                "                   }\n" +
+                "    }\n" +
+                "  ]\n" +
+                "  }\n" +
                 "\n" +
-                "              ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"SubmitDate\": \"7/5/2019 12:00:00 AM\",\n" +
-                "            \"Sheets\": [\n" +
-                "                    {\n" +
-                "                          \"Data3Name\": \"5\"\n" +
-                "                          },\n" +
+                "  \n" +
+                "]";
 
-                "                  {\n" +
-                "                        \"Data3Name\": \"25\"\n" +
-                "                   },\n" +
-
-                "                  {\n" +
-                "                        \"Data3Name\": \"45\"\n" +
-                "                   },\n" +
-
-                "                     {\n" +
-                "                        \"Data3Name\": \"55\"\n" +
-                "                   }\n" +
-                "              ]\n" +
-                "        }\n" +
-                "            \n" +
-                "        \n" +
-                "        \n" +
-                "    ]";
-
+        ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
 
         try {
             JSONArray jsonArray = new JSONArray(data);
             Log.i("tag", "json array data" + jsonArray);
-
-
-         //   List<Hashtable> hashMapsListHours = new ArrayList<>();
-         //   List<Hashtable> hashMapsListDates = new ArrayList<>();
-
+            //   List<Hashtable> hashMapsListHours = new ArrayList<>();
+            //   List<Hashtable> hashMapsListDates = new ArrayList<>();
             int maxLength = 0;
-           String[] dates = new String[jsonArray.length()];
+            String[] dates = new String[jsonArray.length()];
+
             for (int i = 0; i < jsonArray.length(); i++) {
-
-
+                int[] Colors=null;
+                float values[]=null;
+                String[] names=null;
+                BarDataSet set1 = null;
+                ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                 String submitdate = jsonObject.get("SubmitDate").toString();
-               dates[i] = submitdate;
+                dates[i] = submitdate;
 
                 JSONArray jsonArray1 = jsonObject.getJSONArray("Sheets");
                 values = new float[jsonArray1.length()];
+                Colors = new int[jsonArray1.length()];
+                names = new String[jsonArray1.length()];
                 for (int m = 0; m < jsonArray1.length(); m++) {
                     JSONObject jsonObject1 = jsonArray1.getJSONObject(m);
                     float hours = Float.parseFloat(jsonObject1.get("Data3Name").toString());
                     values[m] = hours;
+                    Colors[m] = Color.parseColor(jsonObject1.get("Colorcode").toString());
+                    names[m] = jsonObject1.get("Name").toString();
                     Log.i("tag", "data is hours, " + hours);
                 }
                 Log.i("tag", "data is hours space");
 
                 yVals1.add(new BarEntry(i,values));
-                set1 = new BarDataSet(yVals1, "Statistics Vienna 2014");
-
-                set1.setStackLabels(dates);
+                set1 = new BarDataSet(yVals1,submitdate);
+                set1.setColors(Colors);
+               set1.setStackLabels(names);
+                dataSets.add(set1);
 
             }
         }catch (Exception e)
@@ -225,17 +216,21 @@ public class StackedBarActivity extends DemoBase implements SeekBar.OnSeekBarCha
 
         if (mChart.getData() != null &&
                 mChart.getData().getDataSetCount() > 0) {
-            set1 = (BarDataSet) mChart.getData().getDataSetByIndex(0);
-            set1.setValues(yVals1);
+           // set1 = (BarDataSet) mChart.getData().getDataSetByIndex(0);
+           // set1.setValues(yVals1);
+
+            BarData data1 = new BarData(dataSets);
+            data1.setValueFormatter(new MyValueFormatter());
+            data1.setValueTextColor(Color.WHITE);
+            mChart.setData(data1);
+
             mChart.getData().notifyDataChanged();
             mChart.notifyDataSetChanged();
         } else {
-            set1.setDrawIcons(false);
-            set1.setColors(getColors());
+            //        set1.setDrawIcons(false);
+            //          set1.setColors(getColors());
 //            set1.setStackLabels(new String[]{"Births", "Divorces", "Marriages"});
 
-            ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
-            dataSets.add(set1);
 
             BarData data1 = new BarData(dataSets);
             data1.setValueFormatter(new MyValueFormatter());
@@ -246,6 +241,16 @@ public class StackedBarActivity extends DemoBase implements SeekBar.OnSeekBarCha
 
         mChart.setFitBars(true);
         mChart.invalidate();
+
+    }
+
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+        tvX.setText("" + (mSeekBarX.getProgress() + 1));
+        tvY.setText("" + (mSeekBarY.getProgress()));
+
     }
         @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
